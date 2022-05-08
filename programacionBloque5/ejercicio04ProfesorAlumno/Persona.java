@@ -1,7 +1,7 @@
 package ejercicio04ProfesorAlumno;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 
 public abstract class Persona {
@@ -119,8 +119,15 @@ public abstract class Persona {
 			throw new IESException("No hay ningun mensaje en el buzon");
 		}
 		
-		ArrayList<Mensaje> mensajesOrdenados = new ArrayList<Mensaje>(mensajes);//WHAT!!!!????
-		Collections.sort(mensajes);
+		LinkedList<Mensaje> mensajesOrdenados = new LinkedList<Mensaje>(mensajes);//WHAT!!!!????
+		
+		Collections.sort(mensajesOrdenados, new Comparator<Mensaje>() {
+			
+			public int compare(Mensaje mensaje1, Mensaje mensaje2) {
+				
+				return mensaje1.getTexto().compareTo(mensaje2.getTexto());
+			}
+		});
 		
 		for (Mensaje mensaje : mensajes) {
 			sbMensajesOrdenados.append(mensaje + "\n");
