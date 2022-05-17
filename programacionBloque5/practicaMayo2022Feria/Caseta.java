@@ -1,12 +1,15 @@
 package practicaMayo2022Feria;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Objects;
 
 
 public class Caseta implements Comparable<Caseta>{
 
+	private static final int PRIMER_SOCIO = 1;
 	private String nombre;
 	private String calle;
 	private int numero;
@@ -56,17 +59,33 @@ public class Caseta implements Comparable<Caseta>{
 		if (!esAnadido) {
 			throw new FeriaException("Error, no se puede añadir al socio " + socio);
 		}
-		socio.getNumeroAsignado();
+		
+		if (socios.size() == 0) {
+			socio.setNumeroAsignado(PRIMER_SOCIO);
+		}
+		else {
+			socio.setNumeroAsignado(socios.getLast().getNumeroAsignado()+1);
+		}
 	}
 		
 	//TODO
 	public void eliminarSociosConAntiguedadMenorA( int antiguedad) throws FeriaException {
 		
-		for (Socio socio : socios) {
-			if (socio.getAntiguedad() < antiguedad) {
-				socios.remove(socio);
-			}
+		if (socios.size() == 0) {
+			throw new FeriaException("No hay socios en la caseta");
 		}
+		
+		Iterator<Socio> it = socios.iterator();
+		
+		while (it.hasNext()) {
+			Socio socio = (Socio) it.next();
+			
+			if (socio.getAntiguedad() < antiguedad) {
+				it.remove();
+			}
+		
+		}
+			
 	}
 	
 	//TODO
@@ -75,7 +94,7 @@ public class Caseta implements Comparable<Caseta>{
 	public String listadoDeSociosOrdenadosPorNombre()  {
 		
 		StringBuilder sbListadoDeSociosOrdenadosPorNombre = new StringBuilder();
-		LinkedList<Socio> listadoDeSociosOrdenadosPorNombre = new LinkedList<Socio>();
+		ArrayList<Socio> listadoDeSociosOrdenadosPorNombre = new ArrayList<Socio>();
 		
 		Collections.sort(listadoDeSociosOrdenadosPorNombre);
 		

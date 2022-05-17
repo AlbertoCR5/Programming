@@ -1,8 +1,8 @@
 package practicaMayo2022Feria;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class Feria {
 
@@ -38,13 +38,19 @@ public class Feria {
 	public String listadoCasetasDeUnaCalleOrdenadasPorNumero(String calle) {
 		
 		StringBuilder sbListadoCasetasDeUnaCalleOrdenadasPorNumero = new StringBuilder();
-		LinkedList<Caseta> listadoCasetasDeUnaCalleOrdenadasPorNumero = new LinkedList<Caseta>(casetas.values());
+		ArrayList<Caseta> listadoCasetasDeUnaCalleOrdenadasPorNumero = new ArrayList<Caseta>();
+		
+		for (Caseta caseta : casetas.values()) {
+			if (caseta.getCalle().equalsIgnoreCase(calle)) {
+				listadoCasetasDeUnaCalleOrdenadasPorNumero.add(caseta);
+			}
+		}
 		
 		Collections.sort(listadoCasetasDeUnaCalleOrdenadasPorNumero);
 		
 		for (Caseta caseta : listadoCasetasDeUnaCalleOrdenadasPorNumero) {
 			if (caseta.getCalle().equalsIgnoreCase(calle)) {
-				sbListadoCasetasDeUnaCalleOrdenadasPorNumero.append(caseta + "\n");
+				sbListadoCasetasDeUnaCalleOrdenadasPorNumero.append("Nombre: " + caseta.getNombre() + " Numero: " + caseta.getNumero() +"\n");
 			}
 		}
 		return sbListadoCasetasDeUnaCalleOrdenadasPorNumero.toString();
@@ -53,17 +59,29 @@ public class Feria {
 	//TODO
 	public void borrarCasetaDeUnaCalle(String calle, String nombreCaseta) throws FeriaException{
 		
-		if (!casetas.containsKey(nombreCaseta)) {
+		Caseta casetaEncontrada = casetas.get(nombreCaseta);
+		if (casetaEncontrada == null) {
 			throw new FeriaException("Error, caseta no registrada " + nombreCaseta);
 		}
 		
-		if (calle.contains(nombreCaseta.g)) {
-			
+		if (!casetaEncontrada.getCalle().equalsIgnoreCase(calle)) {
+			throw new FeriaException("No hay caseta con ese nombre en esa calle");
 		}
+		
+		casetas.remove(nombreCaseta);
 	}
 	
 	//TODO
 	public void modificarCalleCaseta( String nombreCaseta, String nuevaCalle) throws FeriaException{
 		
+		Caseta casetaEncontrada = casetas.get(nombreCaseta);
+		
+		if (casetaEncontrada == null) {
+			throw new FeriaException("Error, caseta no registrada " + nombreCaseta);
+		}
+		if (casetaEncontrada.getCalle().equalsIgnoreCase(nuevaCalle)) {
+			throw new FeriaException("Ya hay caseta con ese nombre en esa calle");
+		}
+		casetaEncontrada.setCalle(nuevaCalle);
 	}
 }

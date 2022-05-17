@@ -22,7 +22,7 @@ public class PizzaNormal extends Pizza {
 
 	@Override
 	public String toString() {
-		return super.toString()+"\nNúmero: " + numPizza;
+		return super.toString()+"\nNumero: " + numPizza;
 	}
 	
 	

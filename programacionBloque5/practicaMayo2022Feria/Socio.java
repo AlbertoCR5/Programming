@@ -20,30 +20,34 @@ public class Socio implements Comparable<Socio>{
 	public String getDni() {
 		return dni;
 	}
+	
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
+	
 	public String getNombreCompleto() {
 		return nombreCompleto;
 	}
+	
 	public void setNombreCompleto(String nombreCompleto) {
 		this.nombreCompleto = nombreCompleto;
 	}
 	
-
 	public int getNumeroAsignado() {
 		return numeroAsignado;
 	}
+	
 	public void setNumeroAsignado(int numeroAsignado) {
 		this.numeroAsignado = numeroAsignado;
 	}
+	
 	public int getAntiguedad() {
 		return antiguedad;
 	}
+	
 	public void setAntiguedad(int antiguedad) {
 		this.antiguedad = antiguedad;
 	}
-	
 
 	@Override
 	public String toString() {
@@ -53,6 +57,7 @@ public class Socio implements Comparable<Socio>{
 	public int hashCode() {
 		return Objects.hash(dni);
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -64,11 +69,11 @@ public class Socio implements Comparable<Socio>{
 		Socio other = (Socio) obj;
 		return Objects.equals(dni, other.dni);
 	}
+	
 	@Override
 	public int compareTo(Socio otro) {
 		
 		return this.nombreCompleto.compareTo(otro.nombreCompleto);
 	}
-	
 	
 }

@@ -7,13 +7,12 @@ public class Pedido {
 	private HashSet<Pizza> pizzas;
 	
 	public Pedido(String direccion){
-		
+		setDireccion(direccion);
+		pizzas = new HashSet<Pizza>();
 	}
 	
-	
-	
-	public void agregarPizza(Pizza a){
-		
+	public void agregarPizza(Pizza pizzaPedida){
+		pizzas.add(pizzaPedida);
 	}
 
 	public String getDireccion() {
@@ -27,7 +26,14 @@ public class Pedido {
 	@Override
 	public String toString() {
 		
-	}
-	
-	
+		StringBuilder sbInfo = new StringBuilder();
+		
+		sbInfo.append("Direccion del pedido: " + direccion);
+		
+			for (Pizza pizza : pizzas) {
+				sbInfo.append("\n" + pizza + "\n");
+			}
+			
+		return sbInfo.toString();		
+	}	
 }

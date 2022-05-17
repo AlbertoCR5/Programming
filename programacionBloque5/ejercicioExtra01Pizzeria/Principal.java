@@ -3,15 +3,6 @@ package ejercicioExtra01Pizzeria;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import com.monroy.pizzeria.ColaPedidos;
-import com.monroy.pizzeria.Ingredientes;
-import com.monroy.pizzeria.Pedido;
-import com.monroy.pizzeria.Pizza;
-import com.monroy.pizzeria.PizzaException;
-import com.monroy.pizzeria.PizzaIngrediente;
-import com.monroy.pizzeria.PizzaNormal;
-import com.monroy.pizzeria.Tamanho;
-
 public class Principal {
 	private static final int OPCION_SALIR = 5;
 	private static Scanner teclado = new Scanner(System.in);
@@ -27,10 +18,36 @@ public class Principal {
 
 	}
 
-	
-
 	private static void tratarMenu(int opcion, ColaPedidos cola) {
-		
+
+		Pedido pedido;
+		switch (opcion) {
+
+			case 1: {
+				nuevoPedido(cola);
+				break;
+			}
+			case 2: {
+	
+				try {
+					pedido = cola.atenderPedido();
+					System.out.println("\n----------\nPedido a atender: ");
+					System.out.println(pedido);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+	
+				break;
+			}
+			case 3: {
+				System.out.println("\n-----------\nN�mero de pedidos:" + cola.numeroDePedidosEnCola());
+				break;
+			}
+			case 4: {
+				System.out.println("\nFIN DEL PROGRAMA");
+				break;
+			}
+		}
 
 	}
 
@@ -64,39 +81,40 @@ public class Principal {
 
 	public static String pedirDireccion() {
 		String direccion;
-		System.out.println("\nIntroduce la dirección del pedido:");
+		System.out.println("\nIntroduce la direccion del pedido:");
 		direccion = teclado.nextLine();
+		
 		return direccion;
 	}
 
 	public static int solicitarTipoPizza() {
 		int eleccion;
 		do {
-			System.out
-					.println("1. Pizza de la carta\n2. Pizza por ingredientes");
+			System.out.println("1. Pizza de la carta\n2. Pizza por ingredientes");
 			System.out.print("Elige una Opción: ");
 			eleccion = Integer.parseInt(teclado.nextLine());
 		} while (eleccion != 1 && eleccion != 2);
+		
 		return eleccion;
 	}
 
 	private static Pizza crearPizza(int eleccion) {
 		Pizza p1 = null;
 		switch (eleccion) {
-		case 1: { // pizza normal
-			try {
-				p1 = new PizzaNormal(solicitarTamanho(), solicitarNumeroPizza());
-			} catch (PizzaException e) {
-				System.out.println(e.getMessage());
+			case 1: { // pizza normal
+				try {
+					p1 = new PizzaNormal(solicitarTamanho(), solicitarNumeroPizza());
+				} catch (PizzaException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
 			}
-			break;
-		}
-		case 2: { // pizza por ingrediente
-			p1 = new PizzaIngrediente(solicitarTamanho());
-			agregarIngredientes(p1);
-			break;
-		}
-		}
+			case 2: { // pizza por ingrediente
+				p1 = new PizzaIngrediente(solicitarTamanho());
+				agregarIngredientes(p1);
+				break;
+			}
+			}
 		return p1;
 	}
 
@@ -134,8 +152,7 @@ public class Principal {
 		do {
 			try {
 
-				System.out.println("Elige un ingrediente: "
-						+ Arrays.toString(Ingredientes.values()));
+				System.out.println("Elige un ingrediente: " + Arrays.toString(Ingredientes.values()));
 				cadena = teclado.nextLine().toUpperCase();
 				ing = Ingredientes.valueOf(cadena);
 				error = false;
@@ -151,8 +168,7 @@ public class Principal {
 	private static int solicitarNumeroPizza() {
 		int numPizza = 0;
 		try {
-			System.out.println("¿Que pizza quieres? del 1 al "
-					+ PizzaNormal.TOTAL_PIZZAS_PREPARADAS);
+			System.out.println("¿Que pizza quieres? del 1 al " + PizzaNormal.TOTAL_PIZZAS_PREPARADAS);
 			numPizza = Integer.parseInt(teclado.nextLine());
 		} catch (NumberFormatException e) {
 			System.out.println("ERROR. Elige un número válido.");
@@ -166,8 +182,7 @@ public class Principal {
 
 		do {
 			try {
-				System.out.println("\n¿Que tamaño quieres de pizza?"
-						+ Arrays.toString(Tamanho.values()));
+				System.out.println("\n¿Que tamaño quieres de pizza?" + Arrays.toString(Tamanho.values()));
 				tam = Tamanho.valueOf(teclado.nextLine().toUpperCase());
 				error = false;
 
