@@ -1,3 +1,10 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import historialWeb.VisitaPaginaWeb;
+import historialWeb.VisitaPaginaWebException;
+
 public class chuleta {
 	private String nombreEquipo;
 	private HashSet<Alumno> conjuntoAlumnos;
@@ -20,7 +27,7 @@ public class chuleta {
 		}		
 		conjuntoAlumnos.remove(alumnoABorrar);
 	}
-//BUSCAR	
+BUSCAR	
 	public Alumno buscarAlumno(Alumno alumnoBuscado) throws EquipoException{		
 		Alumno alumno = null;
 		boolean esEncontrado = false;
@@ -73,3 +80,85 @@ public class chuleta {
 		return "Nombre Equipo: " + nombreEquipo + "\nAlumnos: \n" + listadoAlumnos();
 	}
 }
+
+public class Historial {
+
+	private ArrayList<VisitaPaginaWeb>historial;
+	
+	public Historial() {
+
+		this.historial = new ArrayList<VisitaPaginaWeb>();
+	}
+
+	public void annadirNuevaVisitaPaginaWeb(VisitaPaginaWeb visita) throws VisitaPaginaWebException {	
+		if (!esPosibleInsertarVisita(visita)) {
+			throw new VisitaPaginaWebException("Error");
+		}	
+		historial.add(visita);		
+	}
+
+	private boolean esPosibleInsertarVisita(VisitaPaginaWeb visita) {
+		boolean esValida = true;
+		VisitaPaginaWeb ultima;		
+		ultima = ultimaEntrada();	
+		if (ultima != null) {
+			System.out.println("Resultado " + visita.compareTo(ultima));			
+			if (visita.compareTo(ultima) <= 0) {
+				esValida = false;
+			}
+		}	
+		return esValida;
+	}
+	private VisitaPaginaWeb ultimaEntrada() {	
+		VisitaPaginaWeb ultima = null;
+		int posicionUltimo = historial.size() -1;		
+		if (posicionUltimo >= 0) {
+			ultima = historial.get(posicionUltimo);
+		}	
+		return ultima;
+	}
+
+	public String consultarHistorialPorDia(LocalDate fecha) throws VisitaPaginaWebException {		
+		StringBuilder sbHistorialPorDia = new StringBuilder();
+		VisitaPaginaWeb paginaWeb;
+		boolean impresionTerminada = false;
+		int resultadoComparacion;
+		Iterator<VisitaPaginaWeb> iterator = historial.iterator();
+		
+		while (iterator.hasNext() && !impresionTerminada) {
+			paginaWeb = (VisitaPaginaWeb) iterator.next();			
+			resultadoComparacion = paginaWeb.getFechaHora().toLocalDate().compareTo(fecha);		
+			if (resultadoComparacion == 0) {
+				sbHistorialPorDia.append(paginaWeb + "\n");
+			}
+			else {
+				if (resultadoComparacion > 0) {
+					impresionTerminada = true;
+				}
+			}
+		}		
+		if (sbHistorialPorDia.length() == 0) {
+			throw new VisitaPaginaWebException("Error");
+		}		
+		return sbHistorialPorDia.toString();
+	}
+//BOORAR TODO
+	public void borrarHistorial() {
+		historial.clear();		
+	}
+
+	@Override
+	public String toString() {
+		
+		StringBuilder sbHistorialCompleto = new StringBuilder();
+		
+		for (VisitaPaginaWeb visitaPaginaWeb : historial) {
+			sbHistorialCompleto.append(visitaPaginaWeb + "\n");
+		}
+		
+		if (sbHistorialCompleto.length() == 0) {
+			sbHistorialCompleto.append("Historial Vacio");
+		}
+		return sbHistorialCompleto.toString();
+	}
+
