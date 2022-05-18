@@ -20,7 +20,7 @@ public class chuleta {
 		}		
 		conjuntoAlumnos.remove(alumnoABorrar);
 	}
-BUSCAR	
+//BUSCAR	
 	public Alumno buscarAlumno(Alumno alumnoBuscado) throws EquipoException{		
 		Alumno alumno = null;
 		boolean esEncontrado = false;
