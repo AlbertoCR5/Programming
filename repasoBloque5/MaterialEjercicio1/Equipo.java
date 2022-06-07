@@ -7,8 +7,6 @@ public class Equipo {
 
 	public Equipo(String nombre) {
 
-		setNombreEquipo(nombre);
-		conjuntoAlumnos = new HashSet<Alumno>();
 	}
 
 	public String getNombreEquipo() {
@@ -20,42 +18,18 @@ public class Equipo {
 	}
 
 	public void insertarAlumno(Alumno nuevoAlumno) throws EquipoException {
-		
-		boolean esInsertado;
-		
-		esInsertado = conjuntoAlumnos.add(nuevoAlumno);
-		
-		if (!esInsertado) {
-			throw new EquipoException("No se ha podido insertar al alumno");
-		}
+
 		
 	}
 
 	public void borrarAlumno(Alumno alumnoABorrar) throws EquipoException {
 
-		if (!conjuntoAlumnos.contains(alumnoABorrar)) {
-			throw new EquipoException("No se ha podido eliminar al alumno");
-		}
-		conjuntoAlumnos.remove(alumnoABorrar);
+
 	}
 
 	public Alumno buscarAlumno(Alumno alumnoBuscado){
 		
-		Alumno alumnoEncontrado = null;
-		Alumno alumnoColeccion = null;
-		boolean esEncontrado = false;
-		Iterator<Alumno> iterator = conjuntoAlumnos.iterator();
-		
-		while (iterator.hasNext() && !esEncontrado) {
-			alumnoColeccion = (Alumno) iterator.next();
-			
-			if (alumnoColeccion.equals(alumnoBuscado)) {
-				alumnoEncontrado = alumnoColeccion;
-				esEncontrado = true;
-			}
-		}
-		
-		return alumnoEncontrado;				
+					
 	}
 
 	/**
@@ -69,15 +43,7 @@ public class Equipo {
 	 */
 	public Equipo fusionDeEquipos(Equipo otro, String nombre) {
 		
-		Equipo equipoFusionado = new Equipo(nombre);
-		
-		for (Alumno alumno : conjuntoAlumnos) {
-			equipoFusionado.conjuntoAlumnos.add(alumno);
-		}
-		
-		for (Alumno alumno : otro.conjuntoAlumnos) {
-			equipoFusionado.conjuntoAlumnos.add(alumno);
-		}
+	
 		
 		return equipoFusionado;
 		
@@ -96,13 +62,7 @@ public class Equipo {
 	 */
 	public Equipo intersecionDeEquipos(Equipo otro, String nombre) {
 		
-		Equipo equipoIntersecionado = new Equipo(nombre);
-		
-		for (Alumno alumno : conjuntoAlumnos) {
-			if (otro.conjuntoAlumnos.contains(alumno)) {
-				equipoIntersecionado.conjuntoAlumnos.add(alumno);
-			}
-		}
+	
 		
 		return equipoIntersecionado;
 	}
@@ -115,12 +75,7 @@ public class Equipo {
 
 	private String listadoDeAlumnos() {
 
-		StringBuilder sbListadoAlumnos = new StringBuilder();
 		
-		for (Alumno alumno : conjuntoAlumnos) {
-			sbListadoAlumnos.append(alumno + "\n");
-		}
-		return sbListadoAlumnos.toString();
 	}
 
 }
