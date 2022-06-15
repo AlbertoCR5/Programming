@@ -20,7 +20,7 @@ public class RecuperacionJunio2022Ejercicio2 {
 		
 		tipoPrueba = solicitarTipoPrueba("Prueba normal(N) o hasta fallo (F): ");
 		
-		for (int i = 1; i <= CANTIDAD_PREGUNTAS || (tipoPrueba == FALLO && esErroneo == false); i++) {
+		for (int i = 1; i <= CANTIDAD_PREGUNTAS && esErroneo == false; i++) {
 			System.out.println("Pregunta " + i + " de " + CANTIDAD_PREGUNTAS);
 			numero1 = numeroAleatorio.nextInt(101);
 			numero2 = numeroAleatorio.nextInt(101);
@@ -34,7 +34,9 @@ public class RecuperacionJunio2022Ejercicio2 {
 			}
 			else {
 				System.out.println("Incorrecta");
-				esErroneo = true;
+				if (tipoPrueba == FALLO) {
+					esErroneo = true;
+				}				
 			}
 		}
 		
@@ -51,7 +53,7 @@ public class RecuperacionJunio2022Ejercicio2 {
 		
 		char tipoPrueba;
 		
-		System.out.println(string);
+		System.out.print(string);
 		tipoPrueba = teclado.nextLine().toUpperCase().charAt(0);
 		
 		return tipoPrueba;

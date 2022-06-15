@@ -69,7 +69,7 @@ public class RecuperacionJunio2022Ejercicio1 {
 		char aDomicilio;
 		
 		System.out.print(string);
-		aDomicilio = teclado.nextLine().charAt(0);
+		aDomicilio = teclado.nextLine().toUpperCase().charAt(0);
 		
 		return aDomicilio;
 	}
@@ -89,6 +89,8 @@ public class RecuperacionJunio2022Ejercicio1 {
 				precioFinal = PRECIO_BASE_GRANDE;
 			}
 		}
+
+		precioFinal = precioFinal + cantidadIngredientes;
 		
 		if (aDomicilio == AFIRMATIVO) {
 			precioFinal = precioFinal + INCREMENTO_DOMICILIO;
