@@ -1,9 +1,14 @@
-package editorial;
+package ejercicio1;
+
+
 
 import java.util.Calendar;
 
-public class Libro {
+public class Libro implements Comparable<Libro> {
 	public static final int ANNO_ACTUAL=Calendar.getInstance().get(Calendar.YEAR);
+	public static final int PRECIO_MAXIMO_ALFAGUARA = 20;
+	public static final int PRECIO_MAXIMO_ALIANZA = 25;
+	public static final int PRECIO_MAXIMO_ANAGRAMA = 18;
 	private String titulo;
 	private String autor;
 	
@@ -14,7 +19,7 @@ public class Libro {
 	public Libro(String titulo, String autor, Editorial editorial, int anno, int precio) throws LibroException {
 
 		if ( anno <= 0 || anno> ANNO_ACTUAL ) {
-			throw new LibroException("AÃ±o incorrecto");
+			throw new LibroException("Año incorrecto");
 		}
 		
 		this.titulo = titulo;
@@ -57,6 +62,13 @@ public class Libro {
 		return cadena;
 	}
 	
+	@Override
+	public int compareTo(Libro otro) {
+		
+		return Integer.compare(this.precio, otro.precio);
+	}
 	
 	
 }
+
+

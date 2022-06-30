@@ -1,4 +1,4 @@
-package editorial;
+package ejercicio1;
 
 public class LibroException extends Exception{
 
