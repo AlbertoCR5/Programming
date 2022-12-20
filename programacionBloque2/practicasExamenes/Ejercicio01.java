@@ -9,6 +9,8 @@ public class Ejercicio01 {
 	
 	public static void main(String[] args) {
 		
+		int claveEncryptacion;
+		
 		System.out.println("Introduce un caracter");
 		char caracter = teclado.nextLine().charAt(0);
 		boolean esConsonante = comprobarConsonante(caracter);
@@ -48,55 +50,16 @@ public class Ejercicio01 {
 		System.out.println("Introduce una cadena para encryptarla");
 		String cadenaSinEncryptar = teclado.nextLine().toUpperCase();
 		
-		String cadenaEncryptada = ecryptarCadena(cadenaSinEncryptar);
+		do {
+			System.out.println("Introduce la clave de encryptacion (1-10)");
+			claveEncryptacion = Integer.parseInt(teclado.nextLine());
+		} while (claveEncryptacion > 10 || claveEncryptacion < 0);
+		
+		
+		String cadenaEncryptada = ecryptarCadena(cadenaSinEncryptar, claveEncryptacion);
 		System.out.println(cadenaEncryptada);
 	}
-
-	private static String ecryptarCadena(String cadenaSinEncryptar) {
 	
-		StringBuilder sbCadenaEncryptada = new StringBuilder();
-		
-		for (int i = 0; i < cadenaSinEncryptar.length(); i++) {
-			
-			if (Character.isLetter(cadenaSinEncryptar.charAt(i))) {
-				int letraAbecedario = ABECEDARIO.indexOf(cadenaSinEncryptar.charAt(i));
-				sbCadenaEncryptada.append(ABECEDARIO.charAt(letraAbecedario + 3));
-			}
-			else {
-				sbCadenaEncryptada.append(cadenaSinEncryptar.charAt(i));
-			}
-		}
-		
-		return sbCadenaEncryptada.toString();
-	}
-
-	private static String subcadena(String cadena2, int posicionInicial, int posicionFinal) {
-
-		StringBuilder sbSubcadena = new StringBuilder(cadena2);
-		
-		sbSubcadena.delete(0, posicionInicial);
-		sbSubcadena.delete((posicionFinal - posicionInicial+1), sbSubcadena.length());
-		
-		return sbSubcadena.toString();
-	}
-
-	private static boolean comprobarCadena(String cadena) {
-		
-		boolean esConsonante = false;
-		
-		for (int i = 0; i < cadena.length() && !esConsonante; i++) {
-
-			if (Character.isLetter(cadena.charAt(i))) {
-				if (VOCALES.indexOf(cadena.charAt(i)) == -1) {
-					esConsonante = true;
-				} 
-			}
-			
-		}
-		
-		return esConsonante;
-	}
-
 	private static boolean comprobarConsonante(char caracter) {
 		
 		boolean esConsonante = true;
@@ -117,6 +80,64 @@ public class Ejercicio01 {
 		}
 		
 		return esConsonante;
+	}
+
+	private static String subcadena(String cadena2, int posicionInicial, int posicionFinal) {
+
+		StringBuilder sbSubcadena = new StringBuilder(cadena2);
+		
+		if (posicionInicial >= cadena2.length() || posicionFinal >= cadena2.length()) {
+			sbSubcadena.delete(0, cadena2.length());
+			sbSubcadena.append("null");
+		}
+		else {
+			sbSubcadena.delete(0, posicionInicial);
+			sbSubcadena.delete((posicionFinal - posicionInicial+1), sbSubcadena.length());
+		}	
+		
+		return sbSubcadena.toString();
+	}
+
+	private static boolean comprobarCadena(String cadena) {
+		
+		boolean esConsonante = false;
+		
+		for (int i = 0; i < cadena.length() && !esConsonante; i++) {
+
+			if (Character.isLetter(cadena.charAt(i))) {
+				if (VOCALES.indexOf(cadena.charAt(i)) == -1) {
+					esConsonante = true;
+				} 
+			}
+			
+		}
+		
+		return esConsonante;
+	}	
+	
+	private static String ecryptarCadena(String cadenaSinEncryptar, int claveEncryptacion) {
+		
+		StringBuilder sbCadenaEncryptada = new StringBuilder("La palabra encryptada es ");
+		
+		for (int i = 0; i < cadenaSinEncryptar.length(); i++) {
+			
+			if (Character.isLetter(cadenaSinEncryptar.charAt(i))) {
+				int letraAbecedario = ABECEDARIO.indexOf(cadenaSinEncryptar.charAt(i));
+				
+				if ((letraAbecedario + claveEncryptacion) > ABECEDARIO.length()-1) {
+					sbCadenaEncryptada.append(ABECEDARIO.charAt(letraAbecedario - ABECEDARIO.length() + claveEncryptacion));
+				}
+				else {
+					sbCadenaEncryptada.append(ABECEDARIO.charAt(letraAbecedario + claveEncryptacion));
+				}
+				
+			}
+			else {
+				sbCadenaEncryptada.append(cadenaSinEncryptar.charAt(i));
+			}
+		}
+		
+		return sbCadenaEncryptada.toString();
 	}
 
 }
